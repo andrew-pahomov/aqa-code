@@ -14,23 +14,25 @@ public class DataGenerator {
     }
 
     public static String generateDate(int shift) {
-        return LocalDate.now().plusDays(shift).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        val date = LocalDate.now().plusDays(shift).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        return date;
     }
 
-    public static String generateCity() {
+    private static String generateCity(Faker faker) {
         val random = new Random();
         val cities = new String[]{"Москва", "Воронеж", "Краснодар", "Владивосток"};
-        return cities[random.nextInt(cities.length)];
+        val city = cities[random.nextInt(cities.length)];
+        return city;
     }
 
-    public static String generateName(String locale) {
-        val faker = new Faker(new Locale(locale));
-        return faker.name().lastName() + " " + faker.name().firstName();
+    private static String generateName(Faker faker) {
+        val name = faker.name().lastName() + " " + faker.name().firstName();
+        return name;
     }
 
-    public static String generatePhone(String locale) {
-        val faker = new Faker(new Locale(locale));
-        return faker.phoneNumber().phoneNumber();
+    private static String generatePhone(Faker faker) {
+        val phone = faker.phoneNumber().phoneNumber();
+        return phone;
     }
 
     public static class Registration {
@@ -38,7 +40,8 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser(String locale) {
-            return new UserInfo(generateCity(), generateName(locale), generatePhone(locale));
+            val faker = new Faker(new Locale(locale));
+            return new UserInfo(generateCity(faker), generateName(faker), generatePhone(faker));
         }
     }
 
