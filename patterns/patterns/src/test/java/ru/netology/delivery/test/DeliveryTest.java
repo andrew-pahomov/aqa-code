@@ -27,8 +27,10 @@ class DeliveryTest {
     @DisplayName("Should successful plan and replan meeting")
     void shouldSuccessfulPlanAndReplanMeeting() {
         val validUser = DataGenerator.Registration.generateUser("ru");
-        val firstMeetingDate = DataGenerator.generateDate(4);
-        val secondMeetingDate = DataGenerator.generateDate(7);
+        val daysToAddForFirstMeeting = 4;
+        val firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
+        val daysToAddForSecondMeeting = 4;
+        val secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         $("[data-test-id=date] .input__control")
                 .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);

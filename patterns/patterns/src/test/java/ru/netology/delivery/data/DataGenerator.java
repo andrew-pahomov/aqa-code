@@ -18,19 +18,22 @@ public class DataGenerator {
         return date;
     }
 
-    private static String generateCity(Faker faker) {
+    public static String generateCity(String locale) {
+        val faker = new Faker(new Locale(locale));
         val random = new Random();
         val cities = new String[]{"Москва", "Воронеж", "Краснодар", "Владивосток"};
         val city = cities[random.nextInt(cities.length)];
         return city;
     }
 
-    private static String generateName(Faker faker) {
+    public static String generateName(String locale) {
+        val faker = new Faker(new Locale(locale));
         val name = faker.name().lastName() + " " + faker.name().firstName();
         return name;
     }
 
-    private static String generatePhone(Faker faker) {
+    public static String generatePhone(String locale) {
+        val faker = new Faker(new Locale(locale));
         val phone = faker.phoneNumber().phoneNumber();
         return phone;
     }
@@ -40,8 +43,7 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser(String locale) {
-            val faker = new Faker(new Locale(locale));
-            return new UserInfo(generateCity(faker), generateName(faker), generatePhone(faker));
+            return new UserInfo(generateCity(locale), generateName(locale), generatePhone(locale));
         }
     }
 
