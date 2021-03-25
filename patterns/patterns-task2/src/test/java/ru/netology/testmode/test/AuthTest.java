@@ -10,7 +10,10 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static ru.netology.testmode.data.DataGenerator.Registration.*;
+import static ru.netology.testmode.data.DataGenerator.Registration.getRegisteredUser;
+import static ru.netology.testmode.data.DataGenerator.Registration.getUser;
+import static ru.netology.testmode.data.DataGenerator.getLogin;
+import static ru.netology.testmode.data.DataGenerator.getPassword;
 
 class AuthTest {
 
@@ -22,16 +25,27 @@ class AuthTest {
     @Test
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
-        val validUser = getRegisteredUser("active");
-        $("[data-test-id=login] input").setValue(validUser.getLogin());
-        $("[data-test-id=password] input").setValue(validUser.getPassword());
+        val registeredUser = getRegisteredUser("active");
+        $("[data-test-id=login] input").setValue(registeredUser.getLogin());
+        $("[data-test-id=password] input").setValue(registeredUser.getPassword());
         $("[data-test-id='action-login']").click();
         $(withText("Личный кабинет")).shouldBe(visible);
     }
 
     @Test
+    @DisplayName("Should get error message if login with not registered user")
+    void shouldGetErrorIfNotRegisteredUser() {
+        val notRegisteredUser = getUser("active");
+        $("[data-test-id=login] input").setValue(notRegisteredUser.getLogin());
+        $("[data-test-id=password] input").setValue(notRegisteredUser.getPassword());
+        $("[data-test-id='action-login']").click();
+        $("[data-test-id=error-notification] .notification__content").shouldBe(visible)
+                .shouldHave(text("Неверно указан логин или пароль"));
+    }
+
+    @Test
     @DisplayName("Should get error message if login with blocked registered user")
-    void shouldGetErrorIfRegisteredBlockedUser() {
+    void shouldGetErrorIfBlockedUser() {
         val blockedUser = getRegisteredUser("blocked");
         $("[data-test-id=login] input").setValue(blockedUser.getLogin());
         $("[data-test-id=password] input").setValue(blockedUser.getPassword());
@@ -42,10 +56,11 @@ class AuthTest {
 
     @Test
     @DisplayName("Should get error message if login with wrong login")
-    void shouldGetErrorIfWrongLoginUser() {
-        val wrongLoginUser = getWrongLoginUser("active");
-        $("[data-test-id=login] input").setValue(wrongLoginUser.getLogin());
-        $("[data-test-id=password] input").setValue(wrongLoginUser.getPassword());
+    void shouldGetErrorIfWrongLogin() {
+        val registeredUser = getRegisteredUser("active");
+        val wrongLogin = getLogin();
+        $("[data-test-id=login] input").setValue(wrongLogin);
+        $("[data-test-id=password] input").setValue(registeredUser.getPassword());
         $("[data-test-id='action-login']").click();
         $("[data-test-id=error-notification] .notification__content").shouldBe(visible)
                 .shouldHave(text("Неверно указан логин или пароль"));
@@ -53,21 +68,11 @@ class AuthTest {
 
     @Test
     @DisplayName("Should get error message if login with wrong password")
-    void shouldGetErrorIfWrongPasswordUser() {
-        val wrongPasswordUser = getWrongPasswordUser("active");
-        $("[data-test-id=login] input").setValue(wrongPasswordUser.getLogin());
-        $("[data-test-id=password] input").setValue(wrongPasswordUser.getPassword());
-        $("[data-test-id='action-login']").click();
-        $("[data-test-id=error-notification] .notification__content").shouldBe(visible)
-                .shouldHave(text("Неверно указан логин или пароль"));
-    }
-
-    @Test
-    @DisplayName("Should get error message if login with not registered user")
-    void shouldGetErrorIfNotRegisteredUser() {
-        val notRegisteredUser = getUser();
-        $("[data-test-id=login] input").setValue(notRegisteredUser.getLogin());
-        $("[data-test-id=password] input").setValue(notRegisteredUser.getPassword());
+    void shouldGetErrorIfWrongPassword() {
+        val registeredUser = getRegisteredUser("active");
+        val wrongPassword = getPassword();
+        $("[data-test-id=login] input").setValue(registeredUser.getLogin());
+        $("[data-test-id=password] input").setValue(wrongPassword);
         $("[data-test-id='action-login']").click();
         $("[data-test-id=error-notification] .notification__content").shouldBe(visible)
                 .shouldHave(text("Неверно указан логин или пароль"));

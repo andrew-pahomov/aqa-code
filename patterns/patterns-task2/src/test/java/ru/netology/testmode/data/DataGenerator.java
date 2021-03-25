@@ -20,7 +20,7 @@ public class DataGenerator {
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)
             .build();
-    private static Faker faker = new Faker(new Locale("en"));
+    private static final Faker faker = new Faker(new Locale("en"));
 
     private DataGenerator() {
     }
@@ -35,12 +35,12 @@ public class DataGenerator {
                 .statusCode(200);
     }
 
-    private static String getLogin() {
+    public static String getLogin() {
         val login = faker.name().username();
         return login;
     }
 
-    private static String getPassword() {
+    public static String getPassword() {
         val password = faker.internet().password();
         return password;
     }
@@ -49,31 +49,15 @@ public class DataGenerator {
         private Registration() {
         }
 
-        public static RegistrationDto getUser() {
-            val user = new RegistrationDto(getLogin(), getPassword(), "");
+        public static RegistrationDto getUser(String status) {
+            val user = new RegistrationDto(getLogin(), getPassword(), status);
             return user;
         }
 
         public static RegistrationDto getRegisteredUser(String status) {
-            val registeredUser = new RegistrationDto(getLogin(), getPassword(), status);
+            val registeredUser = getUser(status);
             registerUser(registeredUser);
             return registeredUser;
-        }
-
-        public static RegistrationDto getWrongLoginUser(String status) {
-            val password = getPassword();
-            val registeredUser = new RegistrationDto(getLogin(), password, status);
-            val wrongLoginUser = new RegistrationDto(getLogin(), password, status);
-            registerUser(registeredUser);
-            return wrongLoginUser;
-        }
-
-        public static RegistrationDto getWrongPasswordUser(String status) {
-            val login = getLogin();
-            val registeredUser = new RegistrationDto(login, getPassword(), status);
-            val wrongPasswordUser = new RegistrationDto(login, getPassword(), status);
-            registerUser(registeredUser);
-            return wrongPasswordUser;
         }
     }
 
