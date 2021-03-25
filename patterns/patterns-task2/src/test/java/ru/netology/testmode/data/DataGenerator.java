@@ -25,7 +25,7 @@ public class DataGenerator {
     private DataGenerator() {
     }
 
-    private static void registerUser(RegistrationDto user) {
+    private static void sendRequest(RegistrationDto user) {
         given()
                 .spec(requestSpec)
                 .body(user)
@@ -56,7 +56,7 @@ public class DataGenerator {
 
         public static RegistrationDto getRegisteredUser(String status) {
             val registeredUser = getUser(status);
-            registerUser(registeredUser);
+            sendRequest(registeredUser);
             return registeredUser;
         }
     }
