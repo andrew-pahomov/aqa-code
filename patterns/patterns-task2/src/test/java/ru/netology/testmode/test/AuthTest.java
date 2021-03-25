@@ -26,7 +26,10 @@ class AuthTest {
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         val registeredUser = getRegisteredUser("active");
-
+        $("[data-test-id=login] input").setValue(registeredUser.getLogin());
+        $("[data-test-id=password] input").setValue(registeredUser.getPassword());
+        $("[data-test-id='action-login']").click();
+        $(withText("Личный кабинет")).shouldBe(visible);
     }
 
     @Test
