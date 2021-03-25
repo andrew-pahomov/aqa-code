@@ -36,13 +36,12 @@ public class DataGenerator {
     }
 
     public static String getLogin() {
-
+        val login = faker.name().username();
         return login;
     }
 
     public static String getPassword() {
-        // TODO: добавить логику для объявления переменной password и задания её значения, для генерации можно
-        // использовать faker
+        val password = faker.internet().password();
         return password;
     }
 
@@ -51,14 +50,13 @@ public class DataGenerator {
         }
 
         public static RegistrationDto getUser(String status) {
-            // TODO: создать пользователя user с использованием методов getLogin(), getPassword()
-            // и переданного параметра status
+            val user = new RegistrationDto(getLogin(), getPassword(), status);
             return user;
         }
 
         public static RegistrationDto getRegisteredUser(String status) {
-            // TODO: получить пользователя registeredUser вызвав метод getUser(status) и сохранить
-            // его в registeredUser, выполнить регистрацию пользователя вызвав registerUser(registeredUser)
+            val registeredUser = getUser(status);
+            registerUser(registeredUser);
             return registeredUser;
         }
     }
