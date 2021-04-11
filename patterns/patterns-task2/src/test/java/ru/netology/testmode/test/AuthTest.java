@@ -12,8 +12,8 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.testmode.data.DataGenerator.Registration.getRegisteredUser;
 import static ru.netology.testmode.data.DataGenerator.Registration.getUser;
-import static ru.netology.testmode.data.DataGenerator.getLogin;
-import static ru.netology.testmode.data.DataGenerator.getPassword;
+import static ru.netology.testmode.data.DataGenerator.getRandomLogin;
+import static ru.netology.testmode.data.DataGenerator.getRandomPassword;
 
 class AuthTest {
 
@@ -58,7 +58,7 @@ class AuthTest {
     @DisplayName("Should get error message if login with wrong login")
     void shouldGetErrorIfWrongLogin() {
         val registeredUser = getRegisteredUser("active");
-        val wrongLogin = getLogin();
+        val wrongLogin = getRandomLogin();
         $("[data-test-id=login] input").setValue(wrongLogin);
         $("[data-test-id=password] input").setValue(registeredUser.getPassword());
         $("[data-test-id='action-login']").click();
@@ -70,7 +70,7 @@ class AuthTest {
     @DisplayName("Should get error message if login with wrong password")
     void shouldGetErrorIfWrongPassword() {
         val registeredUser = getRegisteredUser("active");
-        val wrongPassword = getPassword();
+        val wrongPassword = getRandomPassword();
         $("[data-test-id=login] input").setValue(registeredUser.getLogin());
         $("[data-test-id=password] input").setValue(wrongPassword);
         $("[data-test-id='action-login']").click();

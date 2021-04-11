@@ -35,12 +35,12 @@ public class DataGenerator {
                 .statusCode(200);
     }
 
-    public static String getLogin() {
+    public static String getRandomLogin() {
         val login = faker.name().username();
         return login;
     }
 
-    public static String getPassword() {
+    public static String getRandomPassword() {
         val password = faker.internet().password();
         return password;
     }
@@ -50,7 +50,7 @@ public class DataGenerator {
         }
 
         public static RegistrationDto getUser(String status) {
-            val user = new RegistrationDto(getLogin(), getPassword(), status);
+            val user = new RegistrationDto(getRandomLogin(), getRandomPassword(), status);
             return user;
         }
 
