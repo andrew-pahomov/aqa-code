@@ -11,4 +11,3 @@
 1. [x] [SQL](sql/)
 1. [x] [Reporting](reporting/)
 1. [ ] [Summary](summary/)
-
