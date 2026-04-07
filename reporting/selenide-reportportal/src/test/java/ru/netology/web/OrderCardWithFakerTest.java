@@ -25,35 +25,47 @@ public class OrderCardWithFakerTest {
     void shouldRegisterNewDate() {
         open("http://localhost:9999/");
 
-        // FIXME: extract selectors (hardcoded only for simplicity)
-        $("[data-test-id='city'] [type='text']").setValue(city);
+        $("[data-test-id='city'] input").setValue(city);
         logInfo("В поле ввода города введено: " + city);
-        $("[data-test-id='date'] [type='tel']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='date'] [type='tel']").setValue(date);
+
+        $("[data-test-id='date'] input")
+                .press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE)
+                .setValue(date);
         logInfo("В поле ввода даты введено: " + date);
-        $("[data-test-id='name'] [type='text']").setValue(name);
+
+        $("[data-test-id='name'] input").setValue(name);
         logInfo("В поле ввода имени введено: " + name);
-        $("[data-test-id='phone'] [type='tel']").setValue(phone);
+
+        $("[data-test-id='phone'] input").setValue(phone);
         logInfo("В поле ввода номера телефона введено: " + phone);
+
         $("[data-test-id='agreement']").click();
         logInfo("Выполнен клик по чекбоксу ");
+
         $$("button").find(exactText("Запланировать")).click();
         $(".notification__title").shouldBe(visible, Duration.ofSeconds(12));
         $("[data-test-id='success-notification'] .notification__content")
                 .shouldHave(exactText("Встреча успешно запланирована на " + date));
         logInfo("Встреча успешно запланирована на " + date);
 
-        $("[data-test-id='city'] [type='text']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='city'] [type='text']").setValue(city);
+        $("[data-test-id='city'] input")
+                .press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE)
+                .setValue(city);
         logInfo("В поле ввода города введено: " + city);
-        $("[data-test-id='date'] [type='tel']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='date'] [type='tel']").setValue(dateOver);
+
+        $("[data-test-id='date'] input")
+                .press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE)
+                .setValue(dateOver);
         logInfo("В поле ввода даты введено: " + dateOver);
-        $("[data-test-id='name'] [type='text']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='name'] [type='text']").setValue(name);
+
+        $("[data-test-id='name'] input")
+                .press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE)
+                .setValue(name);
         logInfo("В поле ввода имени введено: " + name);
-        $("[data-test-id='phone'] [type='tel']").setValue(phone);
+
+        $("[data-test-id='phone'] input").setValue(phone);
         logInfo("В поле ввода номера телефона введено: " + phone);
+
         $$("button").find(exactText("Запланировать")).click();
         $("[data-test-id='replan-notification'] button").click();
         $("[data-test-id='success-notification'] .notification__content")

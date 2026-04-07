@@ -10,6 +10,7 @@ import java.util.Random;
 
 public class DataGenerator {
     private final static Faker faker = new Faker(new Locale("ru"));
+
     private static final List<String> cities = List.of(
             "Майкоп", "Горно-Алтайск", "Уфа", "Улан-Удэ", "Махачкала", "Магас", "Нальчик", "Элиста",
             "Черкесск", "Петрозаводск", "Сыктывкар", "Симферополь", "Йошкар-Ола", "Саранск",
